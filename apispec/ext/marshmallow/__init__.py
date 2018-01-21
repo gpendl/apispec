@@ -176,15 +176,20 @@ def schema_path_helper(spec, view=None, **kwargs):
         #                                                    'items': {'$ref': '#/definitions/User'}}}}}}}
 
     """
-    operations = (
-        kwargs.get('operations') or
-        (view and load_operations_from_docstring(view.__doc__))
-    )
+    operations = kwargs.get('operations')
+    doc_operations = load_operations_from_docstring(view.__doc__) if view else {}
+    if doc_operations:
+        for k, v in doc_operations.items():
+            # avoid overwriting
+            if k in operations and isinstance(v, dict): 
+                operations.get(k).update(doc_operations[k])
+            else:
+                operations.update({k: v})
+
     if not operations:
         return
     operations = operations.copy()
     return Path(operations=operations)
-
 
 def schema_operation_resolver(spec, operations, **kwargs):
     for operation in operations.values():
