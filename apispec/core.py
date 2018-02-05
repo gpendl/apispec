@@ -97,7 +97,6 @@ class Path(dict):
         self.operations.update(path.operations)
         super(Path, self).update(path.operations)
 
-
 class APISpec(object):
     """Stores metadata that describes a RESTful API using the OpenAPI specification.
 
@@ -220,9 +219,7 @@ class APISpec(object):
         p = path
         if isinstance(path, Path):
             p = path.path
-
-        p = normalize_path(p)
-
+        #p = normalize_path(p)
         if isinstance(path, Path):
             path.path = p
         else:

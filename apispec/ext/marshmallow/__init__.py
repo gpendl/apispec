@@ -181,7 +181,7 @@ def schema_path_helper(spec, view=None, **kwargs):
     if doc_operations:
         for k, v in doc_operations.items():
             # avoid overwriting
-            if k in operations and isinstance(v, dict): 
+            if k in operations and isinstance(v, dict):
                 operations.get(k).update(doc_operations[k])
             else:
                 operations.update({k: v})
